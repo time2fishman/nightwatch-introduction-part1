@@ -142,7 +142,7 @@ For this assignment, we will forgo the need of formal test plans and test cases 
 
 * Outline an acceptable set of steps to check whether the calculator can perform calculations provided in a test case
 * The test case would consist of the calculation to perform, and the expected result
-* Create one simple test in the `step1/tests/test.js` file.
+* Create one simple test in the `step1/tests/tests.js` file.
 * You can use plain strings for your `selectors` (i.e. `'button[name="equalsButton"]'` instead of something like `selectors.buttons.equal`)
 
 <details>
@@ -164,7 +164,7 @@ A matching test case could be like the following:
 
 Simplicity at its best, right?
 
-Your `test.js` file already exists in the `nightwatch/step1/tests` folder, and is configured with its `beforeEach`, `after`, etc.  Now you can add a test.  You can start is with something like the following:
+Your `tests.js` file already exists in the `nightwatch/step1/tests` folder, and is configured with its `beforeEach`, `after`, etc.  Now you can add a test to the exported object as a new property, like below:
 
 ```js
 //In nightwatch, tests are "properties" of the exported "test object", and the name of the test
@@ -174,13 +174,21 @@ Your `test.js` file already exists in the `nightwatch/step1/tests` folder, and i
 }
 ```
 
-Populating the test ought to be fairly straightforward.  We need to click the buttons, then read the final solution.  Use the **Inspector** tool in Google Chrome to build your selectors.  Remember when building your selector that any CSS selector will work (you can get more info [here](https://www.w3schools.com/cssref/css_selectors.asp) on building selectors), but the ones that follow a `tag[attributeName=attributeValue]` format are the most effective in my experience.  These will help Nightwatch know EXACTLY what element (item in the page) to interact with.  For any test, you need selectors for anything you interact with, as well as anything you need to read/verify.  If I were going to pull selectors from this project, for the test case listed above, they'd probably be:
+Remember, in objects, you have comma separated properties, and each property is comprised of a key and a value.  So in our test object `'2+2=4'` is now the key of a new property, and `browser => {}` is the value of the new property.
+
+Populating this new test ought to be fairly straightforward.  We need to click the buttons, then read the final solution.  Use the **Inspector** tool in Google Chrome to build your selectors.  Remember when building your selector that any CSS selector will work (you can get more info [here](https://www.w3schools.com/cssref/css_selectors.asp) on building selectors), but the ones that follow a `tag[attributeName=attributeValue]` format are the most effective in my experience.  These will help Nightwatch know EXACTLY what element (item in the page) to interact with.  For any test, you need selectors for anything you interact with, as well as anything you need to read/verify.  If I were going to pull selectors from this project, just for the test case listed above, they'll be for the `2`, `4`, `+` and `=` buttons.
+
+<details>
+
+<summary> Selectors for Step 1 </summary>
 
 * `'button[name="2Button"]'`
 * `'button[name="addButton"]'`
 * `'button[name="equalsButton"]'`
 * `'button[name="4Button"]'`
 * `'span[name="result"]'`
+
+</details>
 
 Now I have all I need to automate a test.
 
