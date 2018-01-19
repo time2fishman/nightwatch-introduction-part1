@@ -1,5 +1,3 @@
-const selectors = require('../supporting/selectors')
-
 module.exports = {
     beforeEach : browser => {
         browser.url('http://localhost:3000')
@@ -10,11 +8,11 @@ module.exports = {
     '2+2=4' : browser => {
         //I click all the appropriate buttons and check the display for the appropriate results, per the steps of my test case
         browser
-            .click(selectors['2'])
-            .expect.element(selectors['result']).text.to.equal('2')
+            .click('button[name="2Button"]')
+            .expect.element('span[name="result"]').text.to.equal('2')
         browser
-            .click(selectors['+'])
-            .expect.element(selectors['result']).text.to.equal('0')
+            .click('button[name="addButton"]')
+            .expect.element('span[name="result"]').text.to.equal('0')
         browser
             .click('button[name="2Button"]')
             .expect.element('span[name="result"]').text.to.equal('2')
