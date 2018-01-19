@@ -65,6 +65,7 @@ Super simple, but it would get the job done.
 A matching test case could be like the following:
 
 > **Precondition**: Open the calculator.  The calculation for the test is 2+2
+
 > **Postcondition**: The displayed result is 4
 
 Simplicity at its best, right?
