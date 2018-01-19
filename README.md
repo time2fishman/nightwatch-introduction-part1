@@ -314,6 +314,10 @@ module.exports = {
 
 </details>
 
+## Step 3
+
+Step 3 will be all about using functions to make life a little easier.  We'll introduce that next week...
+
 ## Contributions
 
 ### Contributions
