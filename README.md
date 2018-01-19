@@ -98,10 +98,12 @@ Using `NightwatchJS` functions to write this test out, I should only need two.  
 
 `.click()`
 > Only needs a selector as an argument, i.e. `.click('button[name="equalsButton"]')`
+> This will literally click whatever element the selector provided identifies, just as if we had clicked manually.
 
 `.expect.element().text.to.equal()`
 > A combination of functions, technically, all you really need to know is that the `.element()` part needs a selector, from which it will pull the text value.  The `.equal()` needs the value we expect to find in the element's text.  I.e. `.expect.element('span[name="result"]').text.to.equal('4')`
-> Note: while you can chain `.click()`s and other functions one after another without having to type `browser` again, an `.expect` of any sort ends the chain.
+> This is an 'assertion', similar to `.assert` or `.verify` commands.  We use these to check and make sure results are as expected.  In this case, to check if the text contained within an element matches what we think it should be.
+> Note: while you can chain `.click()`s and other functions one after another without having to type `browser` again, an `.expect` of any sort ends the chain.  Also, if an `.expect` fails, the test is marked failed, and all remaining steps are skipped.
 
 Using these two bits of functionality from Nightwatch, I can write the simple test below.
 
