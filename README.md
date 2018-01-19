@@ -9,9 +9,18 @@ To begin, fork and clone this repository. Once it has finished downloading `cd` 
 
 You will, rotating through one piece at a time, build a set of automated tests to cover the requirements and acceptance criteria.  These can be found below.  For each step in the project, you will use the corresponding folder in the `nightwatch` folder.
 
-**For Step 1** `nightwatch/step1`
+* **First Thing** - READ.  Read through the requirements and the acceptance criteria.  These will give context to what you should be looking for when you test.  Click around in the calculator.  Make sure you understand how it works - THEN you can get started in automating tests.
 
-**For Step 2** `nightwatch/step2`
+* **For Step 1** `nightwatch/step1` - This will cover creating a test case using NightwatchJS
+
+* **For Step 2** `nightwatch/step2` - This will refactor that test using a separate file for selectors
+
+* **For Step 3** `nightwatch/step3` - **UNDER CONSTRUCTION** We will create a function that will check the UI of the calculator, and another to click buttons
+
+* **For Step 4** `nightwatch/step4` - **UNDER CONSTRUCTION** This will introduce a data file, and another test
+
+* **For Step 5** `nightwatch/step5` - **UNDER CONSTRUCTION** Now we will create a function that will run a full test for us
+
 
 ### Requirements
 
