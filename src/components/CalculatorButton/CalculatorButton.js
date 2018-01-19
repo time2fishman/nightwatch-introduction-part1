@@ -2,12 +2,13 @@ import React, { PropTypes } from "react";
 
 import "./CalculatorButton.css";
 
-export default function CalculatorButton( { backgroundColor, callback, color, value, wide } ) {
+export default function CalculatorButton( { backgroundColor, callback, color, value, name, wide } ) {
 	return (
 		<button
 			onClick={ callback }
 			className={ `calculator-button${ wide ? " calculator-button--wide" : "" }` }
 			style={ { backgroundColor, color } }
+			name={ name }
 		>
 			{ value }
 		</button>

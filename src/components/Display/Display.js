@@ -10,7 +10,9 @@ export default function Display( { value } ) {
 				<div className="display__window-button" />
 				<div className="display__window-button" />
 			</div>
-			{ value }
+			<span name="result">
+				{ value }
+			</span>
 		</div>
 	);
 }

@@ -33,6 +33,7 @@ export class Calculator extends Component {
 				key={ number }
 				value={ number }
 				wide={ number === 0 }
+				name={`${number}Button`}
 			/>
 		) );
 
@@ -45,21 +46,25 @@ export class Calculator extends Component {
 							backgroundColor="#d6d6d6"
 							callback={ clear }
 							value="AC"
+							name="clearButton"
 						/>
 						<CalculatorButton
 							backgroundColor="#d6d6d6"
 							callback={ toggleNegative }
 							value="+/-"
+							name="negativeButton"
 						/>
 						<CalculatorButton
 							backgroundColor="#d6d6d6"
 							callback={ percentage }
 							value="%"
+							name="percentButton"
 						/>
 						{ numberButtons }
 						<CalculatorButton
 							callback={ () => enterNumber( "." ) }
 							value="."
+							name="decimalButton"
 						/>
 					</section>
 					<section className="calculator__operator-buttons">
@@ -68,30 +73,35 @@ export class Calculator extends Component {
 							callback={ () => setOperator( operators.DIVIDE ) }
 							color="#ffffff"
 							value="÷"
+							name="divideButton"
 						/>
 						<CalculatorButton
 							backgroundColor="#f5923e"
 							callback={ () => setOperator( operators.MULTIPLY ) }
 							color="#ffffff"
 							value="×"
+							name="multiplyButton"
 						/>
 						<CalculatorButton
 							backgroundColor="#f5923e"
 							callback={ () => setOperator( operators.SUBTRACT ) }
 							color="#ffffff"
 							value="-"
+							name="subtractButton"
 						/>
 						<CalculatorButton
 							backgroundColor="#f5923e"
 							callback={ () => setOperator( operators.ADD ) }
 							color="#ffffff"
 							value="+"
+							name="addButton"
 						/>
 						<CalculatorButton
 							backgroundColor="#f5923e"
 							callback={ evaluate }
 							color="#ffffff"
 							value="="
+							name="equalsButton"
 						/>
 					</section>
 				</div>
@@ -100,11 +110,7 @@ export class Calculator extends Component {
 	}
 }
 
-function mapStateToProps( state ) {
-	return state;
-}
-
-export default connect( mapStateToProps, {
+export default connect( state => state, {
 	  enterNumber
 	, setOperator
 	, percentage
