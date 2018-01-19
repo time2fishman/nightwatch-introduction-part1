@@ -10,6 +10,7 @@ To begin, fork and clone this repository. Once it has finished downloading `cd` 
 You will, rotating through one piece at a time, build a set of automated tests to cover the requirements and acceptance criteria.  These can be found below.  For each step in the project, you will use the corresponding folder in the `nightwatch` folder.
 
 **For Step 1** `nightwatch/step1`
+
 **For Step 2** `nightwatch/step2`
 
 ### Requirements
@@ -148,9 +149,11 @@ module.exports = {
     beforeEach : browser => {
         browser.url('http://localhost:3000')
     },
+    
     after : browser => {
         browser.end()
-	},
+    },
+    
 	'2+2=4' : browser => {
         //I click all the appropriate buttons and check the display for the appropriate results, per the steps of my test case
         browser
