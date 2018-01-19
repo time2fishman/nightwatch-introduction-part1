@@ -30,7 +30,7 @@ We have here a basic calculator app that you will be utilizing to start your tes
 
 To begin, fork and clone this repository. Once it has finished downloading `cd` into the project root and run `npm i` to fetch the project dependencies. After they are fetched run `npm start` and a browser window will open at `http://localhost:3000` displaying a (fully functional) calculator app.
 
-* You will need to write up a `nightwatchProps.js` file, or copy one from another repository.  It will look like the one below, but with your path and version information, not mine.
+* You will need to write up a `nightwatchProps.js` file, or copy one from another repository if you already have one.  There are some detailed instructions below on setting one up.
 
 <details>
 
@@ -38,7 +38,7 @@ To begin, fork and clone this repository. Once it has finished downloading `cd` 
 
 <br />
 
-In this file we'll store the path to the `testing-resources` folder you created before, as well as the filenames for your `seleniumServer` and `chromedriver`.
+In this file we'll store the path to the `testing-resources` folder you created before, as well as the filenames for your `seleniumServer` and `chromedriver`.  **MAKE SURE** the version on your Selenium server matches the version on *your* machine.  Also the resource path needs to be to *your* testing resources folder, not to mine.
 
 ```js
 module.exports = {
