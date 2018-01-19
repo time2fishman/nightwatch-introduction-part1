@@ -145,7 +145,7 @@ Your `test.js` file already exists in the `nightwatch/step1/tests` folder, and i
 }
 ```
 
-Populating the test ought to be fairly straightforward.  We need to click buttons, then read the finish.  Use the **Inspector** tool in Google Chrome to build your selectors.  Remember when building your selector that any CSS selector will work (you can get more info [here](https://www.w3schools.com/cssref/css_selectors.asp) on building selectors), but the ones that follow a `tag[attributeName=attributeValue]` format are the most effective in my experience.  These will help Nightwatch EXACTLY what element (item in the page) to interact with.  For any test, you need selectors for anything you interact with, as well as anything you need to read/verify.  If I were going to pull selectors from this project, for the test case listed above, they'd probably be:
+Populating the test ought to be fairly straightforward.  We need to click the buttons, then read the final solution.  Use the **Inspector** tool in Google Chrome to build your selectors.  Remember when building your selector that any CSS selector will work (you can get more info [here](https://www.w3schools.com/cssref/css_selectors.asp) on building selectors), but the ones that follow a `tag[attributeName=attributeValue]` format are the most effective in my experience.  These will help Nightwatch know EXACTLY what element (item in the page) to interact with.  For any test, you need selectors for anything you interact with, as well as anything you need to read/verify.  If I were going to pull selectors from this project, for the test case listed above, they'd probably be:
 
 * `'button[name="2Button"]'`
 * `'button[name="addButton"]'`
