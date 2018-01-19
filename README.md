@@ -26,6 +26,8 @@ We have here a basic calculator app that you will be utilizing to start your tes
 
 ## Setup and Requirements
 
+***
+
 ### Setup
 
 To begin, fork and clone this repository. Once it has finished downloading `cd` into the project root and run `npm i` to fetch the project dependencies. After they are fetched run `npm start` and a browser window will open at `http://localhost:3000` displaying a (fully functional) calculator app.
@@ -103,6 +105,8 @@ Nightwatch-Introduction
 
 </details>
 
+***
+
 ### Requirements For The Calculator
 
 #### Basic Functionality
@@ -134,6 +138,7 @@ Nightwatch-Introduction
 
 Now that we have setup out of the way, and you've had a chance to review the app's requirements, we can start in on actually testing it.
 
+***
 
 ## Step 1
 
