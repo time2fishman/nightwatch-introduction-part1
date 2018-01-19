@@ -9,6 +9,9 @@ To begin, fork and clone this repository. Once it has finished downloading `cd` 
 
 You will, rotating through one piece at a time, build a set of automated tests to cover the requirements and acceptance criteria.  These can be found below.  For each step in the project, you will use the corresponding folder in the `nightwatch` folder.
 
+**For Step 1** `nightwatch/step1`
+**For Step 2** `nightwatch/step2`
+
 ### Requirements
 
 #### Basic Functionality
