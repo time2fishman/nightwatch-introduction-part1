@@ -1,10 +1,10 @@
 
-## Nightwatch Introduction
+# Nightwatch Introduction
 
-**The Plan**
+## Outline and Overview
 
-You will, rotating through one piece at a time, build a set of automated tests to cover the requirements and acceptance criteria.  These can be found below.  For each step in the project, you will use the corresponding folder in the `nightwatch` folder.
-**IMPORTANT** You will run your tests for each test with `npm run step#` where # is the number of the step you're on.  `npm run step1`, `npm run step2`, etc.
+We have here a basic calculator app that you will be utilizing to start your test automation career.  NightwatchJS is our automation framework of choice, and step by step you will become familiar with the process of automating test.  You will, rotating through one piece at a time, build a set of automated tests to cover the requirements and acceptance criteria.  These can be found below.  For each step in the project, you will use the corresponding folder in the `nightwatch` folder.
+**IMPORTANT** You will run your tests for each test with the command `npm run step#` where # is the number of the step you're on.  (`npm run step1`, `npm run step2`, etc.)
 
 * **[Setup and Requirements](https://github.com/devmtn-aj/nightwatch-introduction-part1#setup-and-requirements)** - READ.
 > Read through the [requirements](https://github.com/devmtn-aj/nightwatch-introduction-part1#requirements) and the acceptance criteria.  These will give context to what you should be looking for when you test.  Click around in the calculator.  Make sure you understand how it works - THEN you can get started in automating tests.
@@ -12,13 +12,17 @@ You will, rotating through one piece at a time, build a set of automated tests t
 * **[Step 1](https://github.com/devmtn-aj/nightwatch-introduction-part1#step-1)** `nightwatch/step1`
 > This will cover creating a test case using NightwatchJS
 
-* **[Step 2](https://github.com/devmtn-aj/nightwatch-introduction-part1#step-2)** `nightwatch/step2` - This will refactor that test using a separate file for selectors
+* **[Step 2](https://github.com/devmtn-aj/nightwatch-introduction-part1#step-2)** `nightwatch/step2`
+>This will refactor that test using a separate file for selectors
 
-* **Step 3** `nightwatch/step3` - **UNDER CONSTRUCTION** We will create a function that will check the UI of the calculator, and another to click buttons
+* **Step 3** `nightwatch/step3`
+> **UNDER CONSTRUCTION** We will create a function that will check the UI of the calculator, and another to click buttons
 
-* **Step 4** `nightwatch/step4` - **UNDER CONSTRUCTION** This will introduce a data file, and another test
+* **Step 4** `nightwatch/step4` 
+> **UNDER CONSTRUCTION** This will introduce a data file, and another test
 
-* **For Step 5** `nightwatch/step5` - **UNDER CONSTRUCTION** Now we will create a function that will run a full test for us
+* **For Step 5** `nightwatch/step5`
+> **UNDER CONSTRUCTION** Now we will create a function that will run a full test for us
 
 ## Setup and Requirements
 
@@ -64,7 +68,8 @@ Nightwatch-Introduction
 |        `--tests.js
 |--node_modules
 |--public
-........
+|--etc.
+|--etc.
 ```
 
 </details>
