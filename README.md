@@ -1,31 +1,64 @@
 
-## Redux Calculator
+## Nightwatch Introduction
 
 **Setup**
 
-To begin, fork and clone this repository. Once it has finished downloading `cd` into the project root and run `npm i` to fetch the project dependencies. After they are fetched run `npm start` and a browser window will open at `http://localhost:3000` displaying a (non-functioning) calculator app. In another terminal window run `npm test` to run the test suite.
+To begin, fork and clone this repository. Once it has finished downloading `cd` into the project root and run `npm i` to fetch the project dependencies. After they are fetched run `npm start` and a browser window will open at `http://localhost:3000` displaying a (fully functional) calculator app. In another terminal window run `npm test` to run the test suite.
 
 **The Plan**
 
-This project's goal is to recreate the standard OSX calculator in React, handling all state changes in Redux. A layout is provided, but none of the functionality is implemented yet.
+You will, rotating through one piece at a time, build a set of automated tests to cover the requirements and acceptance criteria.  These can be found below.  For each step in the project, you will use the corresponding folder in the `nightwatch` folder.
+
+### Requirements
+
+#### Basic Functionality
+
+1. The display defaults to '0'
+1. When numbers are keyed, the appropriate number appears on the display.  Subsequent numbers will be appended to the existing display, and no leading zeros will be included.
+   * Pressing "1", "2", "0" the resulting display will be "120"
+1. One decimal can be added to the number.  Only the first decimal click will be accepted.
+1. When a mathematical operator is selected, the display will display a '0' until the subsequent number in the calculation is entered.
+   * Pressing "1", "+" will result in a "0" on the display
+1. Mathematical operations are completed appropriately when the "=" button is selected
+   * Pressing "1", "+", "2", "=" will result in a "3" on the display
+
+#### Additional Functionality
+
+1. "+/-" is a key which will flip the positive/negative value of the current number
+   * If "2.5" is displayed and "+/-" is selected, "-2.5" will be displayed and used in calculations instead
+1. "%" will divide a number by 100 -- showing "decimal notation" for the percentage
+   * If "81" is on the screen and the "%" button is selected, "0.81" will be displayed and used in future calculations
+1. "A/C" will clear all pre-existing calculations and start fresh from an empty "0" display
+
+#### Acceptance Criteria
+
+1. The buttons should appear in an order and configuration consistent with most simple calculators
+1. Complex chains of calculations should be possible
+   * 12 + 2 / 42 - 3, take the result and continue, '%' * 530, etc
+   * At least one test should be completed with a set of at least 40 button presses 
+
 
 ### Step 1
 
 **Summary**
 
-Our first step will be installing the necessary dependencies and connecting our application to Redux. Before beginning, take a few minutes get familiar with the provided components. The root component, `Calculator` serves primarily as a container component, passing props to its children. The `Display` component is a functional component that simply renders some markup and will display the calculator's value. The `CalculatorButton` component is another functional component, and will be the user's primary point of interaction with the application.
+For this assignment, we will forgo the need of formal test plans and test cases in JIRA.  Instead, we should come up with a consistent set of steps we can use in our testing.  The fact that this is a single page application makes things a lot simpler in that regard - one set of steps can fulfill our needs.  We'll take those and write a simple automated test.
 
 **Instructions**
 
-* Install Redux and React-Redux
-* Create an initial state and reducer function in `src/ducks/calculator.js`
-* Create a store in `src/store.js`
-* Make the React application aware of Redux using the `Provider` component
-* Connect the `Calculator` component definition to the Redux store
+* Outline an acceptable set of steps to check whether the calculator can perform calculations provided in a test case
+* The test case would consist of the calculation to perform, and the expected result
+* Create one simple test in the `step1\tests\test.js` file.
+* You can use plain strings for your `selectors` (i.e. `'button[name="equalsButton"]'` instead of something like `selectors.buttons.equal`)
 
 **Detailed Instructions**
 
-Start out by running `npm i redux react-redux --save` to download our dependencies and save them to the `package.json`. Open `src/ducks/calculator.js` and create an `initialState` variable. `initialState` should be an object with three properties:
+Based on the above rules, an effective set of test steps would be something like the following:
+
+> 1. Click the listed buttons in sequence 
+> 1. The display should update correctly after each button press
+
+Super simple, but it would get the job done.
 
 * `currentValue` - Set equal to `"0"` (note that it is a string!). This is where we will be storing the calculator's current value that displays on screen.
 * `operator` - Set equal to `null`. This will be a string representation of what operation the user wants to use, i.e "DIVIDE" or "MULTIPLY"
