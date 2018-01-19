@@ -30,35 +30,44 @@ To begin, fork and clone this repository. Once it has finished downloading `cd` 
 
 Every step is in a separate folder.  Look in the file explorer of the project, and compare it to the file tree below.  (Some of this is under construction, but this is what your starting file structure in the nightwatch folder will look like)
 
+<details>
+
+<summary> File Tree </summary>
+
 ```
 Nightwatch-Introduction
 |
 `--nightwatch
-   |--step1
-   |  `--tests
-   |     `--tests.js
-   |--step2
-   |  `--tests
-   |     `--tests.js
-   |--step3
-   |  |--supporting
-   |  |  `--selectors.js
-   |  `--tests
-   |     `--tests.js
-   |--step4
-   |  |--supporting
-   |  |  |--functions.js
-   |  |  `--selectors.jstests
-   |  `--tests
-   |     `--tests.js
-   `--step5
-      |--supporting
-      |  |--data.js
-      |  |--functions.js
-      |  `--selectors.js
-      `--tests
-         `--tests.js
+|  |--step1
+|  |  `--tests
+|  |     `--tests.js
+|  |--step2
+|  |  `--tests
+|  |     `--tests.js
+|  |--step3
+|  |  |--supporting
+|  |  |  `--selectors.js
+|  |  `--tests
+|  |     `--tests.js
+|  |--step4
+|  |  |--supporting
+|  |  |  |--functions.js
+|  |  |  `--selectors.jstests
+|  |  `--tests
+|  |     `--tests.js
+|  `--step5
+|     |--supporting
+|     |  |--data.js
+|     |  |--functions.js
+|     |  `--selectors.js
+|     `--tests
+|        `--tests.js
+|--node_modules
+|--public
+........
 ```
+
+</details>
 
 ### Requirements
 
