@@ -103,7 +103,7 @@ Nightwatch-Introduction
 
 </details>
 
-### Requirements
+### Requirements For The Calculator
 
 #### Basic Functionality
 
@@ -130,6 +130,9 @@ Nightwatch-Introduction
 1. Complex chains of calculations should be possible
    * 12 + 2 / 42 - 3, take the result and continue, '%' * 530, etc
    * At least one test should be completed with a set of at least 40 button presses 
+
+
+Now that we have setup out of the way, and you've had a chance to review the app's requirements, we can start in on actually testing it.
 
 
 ## Step 1
