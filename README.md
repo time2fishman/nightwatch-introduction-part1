@@ -38,13 +38,13 @@ You will, rotating through one piece at a time, build a set of automated tests t
    * At least one test should be completed with a set of at least 40 button presses 
 
 
-### Step 1
+## Step 1
 
-**Summary**
+### Summary
 
 For this assignment, we will forgo the need of formal test plans and test cases in JIRA.  Instead, we should come up with a consistent set of steps we can use in our testing.  The fact that this is a single page application makes things a lot simpler in that regard - one set of steps can fulfill our needs.  We'll take those and write a simple automated test.
 
-**Instructions**
+### Instructions
 
 * Outline an acceptable set of steps to check whether the calculator can perform calculations provided in a test case
 * The test case would consist of the calculation to perform, and the expected result
@@ -73,7 +73,8 @@ Simplicity at its best, right?
 Your `test.js` file already exists in the `nightwatch/step1/tests` folder, and is configured with its `beforeEach`, `after`, etc.  Now you can add a test.  You can start is with something like the following:
 
 ```js
-//In nightwatch, tests are "properties" of the exported "test object", and the name of the test is the property's "key" while the test function is the "value".
+//In nightwatch, tests are "properties" of the exported "test object", and the name of the test
+//is the property's "key" while the test function is the "value".
 '2+2=4' : browser => {
 	
 }
@@ -131,9 +132,7 @@ If you have any errors to debug, you can do so... You can also check your code a
 
 </details>
 
-<details>
-
-<summary> **Code Solution** </summary>
+### Code Solution
 
 <details>
 
@@ -146,7 +145,8 @@ module.exports = {
     },
     after : browser => {
         browser.end()
-    },'2+2=4' : browser => {
+	},
+	'2+2=4' : browser => {
         //I click all the appropriate buttons and check the display for the appropriate results, per the steps of my test case
         browser
             .click('button[name="2Button"]')
@@ -165,6 +165,152 @@ module.exports = {
 ```
 
 </details>
+
+## Step 2
+
+### Summary
+
+Now that we've written a basic test and seen it run, now we can start to structure our test a little more clearly.  Here, we'll be using the `step2` folder inside of the `nightwatch` folder to define our selectors in one file, where they can be defined once and used multiple times.  This is much easier to use and much more maintainable.
+
+### Instructions
+
+* Create a folder for supporting files, I'm calling mine `supporting` this time.
+* Inside of that folder, create a `selectors.js` file, and export an object containing all the selectors you may need for your tests.
+* Require that object in your `tests.js` file, and refactor your original test to use the new selectors.
+
+<details>
+
+<summary> Detailed Instructions </summary>
+
+First we need to create the `supporting` folder, inside of the `step2` folder, which is inside of the repository's `nightwatch` folder.  Then we can create the `selectors.js` file and start working with it.
+
+In that `selectors.js` file we'll export our selectors object.
+
+```js
+module.exports = {
+
+}
+```
+
+It's as simple as that.  Now we just need to populate the object with properites, where the key is the name of the selector, and the value is the selector itself.  I'm using the button's text to name my selectors personally.
+
+The good news is that you already know how to build your selectors, `tag[attributeName=attributeValue]`.  We even had a few already in our last test.  So go out and start grabbing tags and attributes to build your selectors for all of the buttons in the calculator, and the display.
+
+You can see how I got started below:
+
+```js
+module.exports = {
+	'0' : 'button[name="0Button"]',
+	'1' : 'button[name="1Button"]',
+	//....
+	'+/-' : 'button[name="negativeButton"]',
+	//etc.
+}
+```
+
+You get the idea.
+
+With these selectors in our selector file, we can then require them in our `tests.js` file, back in the `tests` folder of `step2`.  It's already prepopulated with everything from `step1`, we just need to require the selectors now.
+
+```js
+//I'm making this a constant, so I don't accidentally change my selectors, 
+//and then my require function uses the path from the tests.js file to the selectors file.
+const selectors = require('../supporting/selectors')
+
+module.exports = {
+    beforeEach : browser => {
+        browser.url('http://localhost:3000')
+    },
+```
+
+That constant, `selectors`, in the `tests.js` file, now has assigned to it the object exported from our `selectors.js` file.  In other words, it has ALL the selectors we defined over there as its properties.
+
+Now we're prepared to refactor our original `'2+2=4'` test with the selectors from our selectors file.  We can do this by replacing any of the plain string selectors (i.e. `'button[name="2Button"]'`) with a selector we defined in our `selectors.js` file.  We can access these by using the properties  on the `selectors` constant in the `tests.js` file (i.e. `selectors['2']`).
+
+Here's an example of how I could do that.
+
+```js
+    '2+2=4' : browser => {
+        //I click all the appropriate buttons and check the display for the appropriate results, per the steps of my test case
+        browser
+            .click(selectors['2'])
+            .expect.element(selectors['result']).text.to.equal('2')
+        browser
+            .click(selectors['+'])
+			.expect.element(selectors['result']).text.to.equal('0')
+		//...
+```
+
+Now, after replacing all the string selectors with those from our `selectors.js` file, I can run my tests using the command `npm run step2` this time, with the following result:
+
+<img src="https://raw.githubusercontent.com/devmtn-aj/nightwatch-introduction/solution/readme-assets/step1Results.png"/>
+
+</details>
+
+### Code Solution
+
+<details>
+
+<summary> <code> selectors.js </code> </summary>
+
+```js
+module.exports = {
+    '0' : 'button[name="0Button"]',
+    '1' : 'button[name="1Button"]',
+    '2' : 'button[name="2Button"]',
+    '3' : 'button[name="3Button"]',
+    '4' : 'button[name="4Button"]',
+    '5' : 'button[name="5Button"]',
+    '6' : 'button[name="6Button"]',
+    '7' : 'button[name="7Button"]',
+    '8' : 'button[name="8Button"]',
+    '9' : 'button[name="9Button"]',
+    '+' : 'button[name="addButton"]',
+    '-' : 'button[name="subtractButton"]',
+    '*' : 'button[name="multiplyButton"]',
+    '/' : 'button[name="divideButton"]',
+    '=' : 'button[name="equalsButton"]',
+    '%' : 'button[name="percentButton"]',
+    '+/-' : 'button[name="negativeButton"]',
+    'AC' : 'button[name="clearButton"]',
+    '.' : 'button[name="decimalButton"]',
+    'result' : 'span[name="result"]'
+}
+```
+
+</details>
+
+<details>
+
+<summary> <code> tests.js </code> </summary>
+
+```js
+const selectors = require('../supporting/selectors')
+
+module.exports = {
+    beforeEach : browser => {
+        browser.url('http://localhost:3000')
+    },
+    after : browser => {
+        browser.end()
+    },
+    '2+2=4' : browser => {
+        //I click all the appropriate buttons and check the display for the appropriate results, per the steps of my test case
+        browser
+            .click(selectors['2'])
+            .expect.element(selectors['result']).text.to.equal('2')
+        browser
+            .click(selectors['+'])
+            .expect.element(selectors['result']).text.to.equal('0')
+        browser
+            .click('button[name="2Button"]')
+            .expect.element('span[name="result"]').text.to.equal('2')
+        browser
+            .click('button[name="equalsButton"]')
+            .expect.element('span[name="result"]').text.to.equal('4')
+    }
+}
+```
 
 </details>
 
