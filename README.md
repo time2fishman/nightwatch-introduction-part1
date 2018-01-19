@@ -9,7 +9,7 @@ To begin, fork and clone this repository. Once it has finished downloading `cd` 
 
 You will, rotating through one piece at a time, build a set of automated tests to cover the requirements and acceptance criteria.  These can be found below.  For each step in the project, you will use the corresponding folder in the `nightwatch` folder.
 
-* **First Thing** - READ.  Read through the requirements and the acceptance criteria.  These will give context to what you should be looking for when you test.  Click around in the calculator.  Make sure you understand how it works - THEN you can get started in automating tests.
+* **First Thing** - READ.  Read through the [requirements](https://github.com/devmtn-aj/nightwatch-introduction-part1#requirements) and the acceptance criteria.  These will give context to what you should be looking for when you test.  Click around in the calculator.  Make sure you understand how it works - THEN you can get started in automating tests.
 
 * **For Step 1** `nightwatch/step1` - This will cover creating a test case using NightwatchJS
 
