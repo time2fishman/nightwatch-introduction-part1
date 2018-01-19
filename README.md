@@ -11,7 +11,7 @@ You will, rotating through one piece at a time, build a set of automated tests t
 
 * **First Thing** - READ.  Read through the [requirements](https://github.com/devmtn-aj/nightwatch-introduction-part1#requirements) and the acceptance criteria.  These will give context to what you should be looking for when you test.  Click around in the calculator.  Make sure you understand how it works - THEN you can get started in automating tests.
 
-* [**Step 1**](https://github.com/devmtn-aj/nightwatch-introduction-part1#step-1) `nightwatch/step1` - This will cover creating a test case using NightwatchJS
+* **[Step 1](https://github.com/devmtn-aj/nightwatch-introduction-part1#step-1)** `nightwatch/step1` - This will cover creating a test case using NightwatchJS
 
 * **Step 2** `nightwatch/step2` - This will refactor that test using a separate file for selectors
 
