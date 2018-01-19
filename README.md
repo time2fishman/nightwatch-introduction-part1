@@ -24,9 +24,9 @@ We have here a basic calculator app that you will be utilizing to start your tes
 * **For Step 5** `nightwatch/step5`
 > **UNDER CONSTRUCTION** Now we will create a function that will run a full test for us
 
-## Setup and Requirements
-
 ***
+
+## Setup and Requirements
 
 ### Setup
 
