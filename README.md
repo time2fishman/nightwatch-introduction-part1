@@ -30,6 +30,35 @@ We have here a basic calculator app that you will be utilizing to start your tes
 
 To begin, fork and clone this repository. Once it has finished downloading `cd` into the project root and run `npm i` to fetch the project dependencies. After they are fetched run `npm start` and a browser window will open at `http://localhost:3000` displaying a (fully functional) calculator app.
 
+* You will need to write up a `nightwatchProps.js` file, or copy one from another repository.  It will look like the one below, but with your path and version information, not mine.
+
+<details>
+
+<summary> <code> nightwatchProps.js </code> </summary>
+
+<br />
+
+In this file we'll store the path to the `testing-resources` folder you created before, as well as the filenames for your `seleniumServer` and `chromedriver`.
+
+```js
+module.exports = {
+    resourcePath : "/Users/ajlarson/src/testing-resources/",
+    seleniumServer: "selenium-server-standalone-3.6.0.jar",
+    chromedriver: "chromedriver"
+}
+```
+
+Note: For Windows computers, you have a different pathing format, so your `resourcePath` will look something like:
+```js
+    resourcePath : "C:\\Users\\AJ\\src\\testing-resources\\"
+```
+Note2: Also for Windows, your `chromedriver` listing needs to be `chromedriver.exe`
+```js
+    chromedriver: "chromedriver.exe"
+```
+
+</details>
+
 ### The Format
 
 Every step is in a separate folder.  Look in the file explorer of the project, and compare it to the file tree below.  (Some of this is under construction, but this is what your starting file structure in the nightwatch folder will look like)
