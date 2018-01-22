@@ -19,6 +19,7 @@
     "build": "react-scripts build",
     "step1": "nightwatch nightwatch/step1/tests/",
     "step2": "nightwatch nightwatch/step2/tests/",
+    "step3": "nightwatch nightwatch/step3/tests/",
     "eject": "react-scripts eject"
   }
 }
