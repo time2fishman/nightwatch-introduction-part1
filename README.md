@@ -548,7 +548,7 @@ With our function checking visibility and the displayed text, we're good to go. 
 Remember how we assigned the function to the constant `uiChecker`?  We're going to make the value of a property on the exported object equal to `uiChecker`.  See below:
 
 ```js
-module.exports: {
+module.exports = {
     uiChecker: uiChecker
 }
 ```
@@ -654,7 +654,7 @@ We know based on how the calculator works, if anything else that is not a number
     }
 ```
 
-Now, we things are a little simpler.  We may need to replace a zero on the screen (if the display is '0' and we didn't press the decimal), otherwise we just add the new number to the existing number on the screen, and expect the new result.
+To handle number clicks (or decimal clicks) we have things a little easier.  We may need to replace a zero on the screen (if the display is '0' and we didn't press the decimal), otherwise we just add the new number to the existing number on the screen, and expect the new result.
 
 ```js
     else {
