@@ -21,8 +21,8 @@ We have here a basic calculator app that you will be utilizing to start your tes
 * **[Step 3](https://github.com/devmtn-aj/nightwatch-introduction-part1#step-3)** `nightwatch/step3`
 > We will create a function that will check the UI of the calculator, and another to click buttons
 
-* **Step 4** `nightwatch/step4` 
-> **UNDER CONSTRUCTION** This will introduce a data file, and another test
+* **[Step 4](https://github.com/devmtn-aj/nightwatch-introduction-part1#step-4)**
+> This will introduce a data file.
 
 * **For Step 5** `nightwatch/step5`
 > **UNDER CONSTRUCTION** Now we will create a function that will run a full test for us
@@ -854,6 +854,29 @@ module.exports = {
 ```
 
 </details>
+
+## Step 4
+
+### Overview
+
+This may well be the simplest step of the 5...  We're going to refactor our existing tests and write one new one using a data file.
+
+### Instructions
+
+* Create a file `data.js` in your `step4/supporting` folder
+* Require this in the `tests.js` file and use it for all your data (inputs, expected results, etc)
+* Ideally you can do this without referring to the detailed instructions
+* We haven't tested the '%' button yet, or '+/-', so we'll do that in the new test
+
+<details>
+
+<summary> Detailed Instructions </summary>
+
+
+
+</details>
+
+### Code Solution
 
 ## Contributions
 
