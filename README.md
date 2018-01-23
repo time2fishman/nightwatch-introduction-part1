@@ -3,8 +3,11 @@
 
 ## Outline and Overview
 
-We have here a basic calculator app that you will be utilizing to start your test automation career.  NightwatchJS is our automation framework of choice, and step by step you will become familiar with the process of automating test.  You will, rotating through one piece at a time, build a set of automated tests to cover the requirements and acceptance criteria.  These can be found below.  For each step in the project, you will use the corresponding folder in the `nightwatch` folder.
+We have here a basic calculator app that you will be utilizing to start your test automation career.  NightwatchJS is our automation framework of choice, and step by step you will become familiar with the process of automating tests.  One step at a time we'll build a set of automated tests to cover the requirements and acceptance criteria, which can be found below.  For each step in the project, you will use the corresponding folder in the `nightwatch` folder.
+
 **IMPORTANT** You will run your tests for each test with the command `npm run step#` where # is the number of the step you're on.  (`npm run step1`, `npm run step2`, etc.)
+
+**ALSO IMPORTANT** You need to start the application before running tests, use the command `npm start` to do so.
 
 * **[Setup and Requirements](https://github.com/devmtn-aj/nightwatch-introduction-part1#setup-and-requirements)** - READ.
 > Read through the [requirements](https://github.com/devmtn-aj/nightwatch-introduction-part1#requirements) and the acceptance criteria.  These will give context to what you should be looking for when you test.  Click around in the calculator.  Make sure you understand how it works - THEN you can get started in automating tests.
@@ -18,8 +21,8 @@ We have here a basic calculator app that you will be utilizing to start your tes
 * **[Step 3](https://github.com/devmtn-aj/nightwatch-introduction-part1#step-3)** `nightwatch/step3`
 > We will create a function that will check the UI of the calculator, and another to click buttons
 
-* **Step 4** `nightwatch/step4` 
-> **UNDER CONSTRUCTION** This will introduce a data file, and another test
+* **[Step 4](https://github.com/devmtn-aj/nightwatch-introduction-part1#step-4)**
+> This will introduce a data file.
 
 * **For Step 5** `nightwatch/step5`
 > **UNDER CONSTRUCTION** Now we will create a function that will run a full test for us
@@ -407,7 +410,8 @@ module.exports = {
     },
     after : browser => {
         browser.end()
-    }'2+2=4' : browser => {
+    },
+    '2+2=4' : browser => {
         //I click all the appropriate buttons and check the display for the appropriate results, per the steps of my test case
         browser
             .click(selectors['2'])
@@ -461,7 +465,7 @@ As I said in the summary, we can do more, but this is a GREAT start for our auto
 1. We need to pass or fail the UI check
    * The easiest way for us to do this will be to pass our function the `browser` object we've been using with Nightwatch, so that we can write our `expect` statements right in the function and it will pass or fail right there.
 
-Now that we've identified what our function is going to do (check the buttons and display for visibility and displayed text), arguments it needs (the `browser`), and what it returns (nothing in this case), we can get writing.  We'll comment this function before we right it.  There is a format of comment called JSDoc that generates the popup prompt for us to use every time the function is called.  Not only does it explain what the function does, but it makes sure we (or any other developer using our function) knows how to use it correctly.
+Now that we've identified what our function is going to do (check the buttons and display for visibility and displayed text), arguments it needs (the `browser`), and what it returns (nothing in this case), we can get writing.  We'll comment this function before we write it.  There is a format of comment called JSDoc that generates the popup prompt for us to use every time the function is called.  Not only does it explain what the function does, but it makes sure we (or any other developer using our function) knows how to use it correctly.
 
 There are some great [docs on GitHub](https://github.com/shri/JSDoc-Style-Guide) for JSDoc.
 
@@ -544,7 +548,7 @@ With our function checking visibility and the displayed text, we're good to go. 
 Remember how we assigned the function to the constant `uiChecker`?  We're going to make the value of a property on the exported object equal to `uiChecker`.  See below:
 
 ```js
-module.exports: {
+module.exports = {
     uiChecker: uiChecker
 }
 ```
@@ -565,7 +569,7 @@ We'll create the new test right after the `after` function is declared, and befo
     after : browser => {
         browser.end()
     },
-    'UI Check' : browser => functions.uiChecker(),
+    'UI Check' : browser => functions.uiChecker(browser),
     '2+2=4' : browser => {
 ```
 
@@ -578,7 +582,6 @@ I'm only showing the very end, but you can see that adding the `UI Check` test, 
 With our first function out of the way, we can try one that's a little less striaghtforward.  This is the function that clicks a button and verifies the display.
 
 ```js
-/**
 /**
  * Clicks a button and checks that the resulting display is correct.
  * If the button clicked is a special operator (=, %, +/-), we won't
@@ -593,7 +596,6 @@ If you can read the above, you can see that this function will take a browser an
 We can fully declare the function, as a constant again, and we'll give it a very creative name...
 
 ```js
-/**
 /**
  * Clicks a button and checks that the resulting display is correct.
  * If the button clicked is a special operator (=, %, +/-), we won't
@@ -652,7 +654,7 @@ We know based on how the calculator works, if anything else that is not a number
     }
 ```
 
-Now, we things are a little simpler.  We may need to replace a zero on the screen (if the display is '0' and we didn't press the decimal), otherwise we just add the new number to the existing number on the screen, and expect the new result.
+To handle number clicks (or decimal clicks) we have things a little easier.  We may need to replace a zero on the screen (if the display is '0' and we didn't press the decimal), otherwise we just add the new number to the existing number on the screen, and expect the new result.
 
 ```js
     else {
@@ -852,6 +854,29 @@ module.exports = {
 ```
 
 </details>
+
+## Step 4
+
+### Overview
+
+This may well be the simplest step of the 5...  We're going to refactor our existing tests and write one new one using a data file.
+
+### Instructions
+
+* Create a file `data.js` in your `step4/supporting` folder
+* Require this in the `tests.js` file and use it for all your data (inputs, expected results, etc)
+* Ideally you can do this without referring to the detailed instructions
+* We haven't tested the '%' button yet, or '+/-', so we'll do that in the new test
+
+<details>
+
+<summary> Detailed Instructions </summary>
+
+Ask AJ for help.
+
+</details>
+
+### Code Solution
 
 ## Contributions
 
