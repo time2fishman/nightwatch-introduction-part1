@@ -581,11 +581,16 @@ I'm only showing the very end, but you can see that adding the `UI Check` test, 
 
 With our first function out of the way, we can try one that's a little less striaghtforward.  This is the function that clicks a button and verifies the display.
 
+*What follows for Step 3 is a stretch goal.*  It's pretty intensive compared to the code we've looked at so far.  Feel free to play with it, but I won't be going into too much detail on all of the steps.
+
+<details>
+
+<summary> <code> buttonClicker </code> Stretch Goal </summary>
+
 ```js
 /**
  * Clicks a button and checks that the resulting display is correct.
- * If the button clicked is a special operator (=, %, +/-), we won't
- * check the result in this function. 
+ * If the button clicked is a '=', we won't check the result in this function. 
  * @param {object} browser     an object provided by NightwatchJS which hooks into the test browser
  * @param {string} button      the key of the button to click (corresponds to the keys in selectors.js)
  */
@@ -598,18 +603,27 @@ We can fully declare the function, as a constant again, and we'll give it a very
 ```js
 /**
  * Clicks a button and checks that the resulting display is correct.
- * If the button clicked is a special operator (=, %, +/-), we won't
- * check the result in this function.
- *  
+ * If the button clicked '=', we won't check the result in this function.
+ * As the function won't reset with the test, we should click the clear button before each test
+ * 
  * @param {object} browser     an object provided by NightwatchJS which hooks into the test browser
  * @param {string} button      the key of the button to click (corresponds to the keys in selectors.js)
  */
 const buttonClicker = (browser, button) => {
     //click the button
 
-    //verify the display if NOT a special operator
+    //set the expected display per the requirements, and check it
     
 }
+```
+
+Before we forget, we'll update our `beforeEach` in `tests.js` to call this function and click the 'AC' button.
+
+```js
+    beforeEach : browser => {
+        browser.url('http://localhost:3000')
+        functions.buttonClicker(browser, 'AC')
+    },
 ```
 
 We can set up the button click portion pretty easily.  Remember how we required the `selectors.js` export into `functions.js` earlier?  We only need to use Nightwatch's `.click()` function for that step.  The important thing here is that we'll use the selector named by the `button` parameter, which is defined as needing to be a key from that file anyway ('0', 'AC', etc).
@@ -627,46 +641,89 @@ That takes care of that.  Now to verify the display.  To do this, the first thin
 var currentDisplay = '0'
 ```
 
-We have an easy start - we've declared that we won't check the display for the listed "special operators" =, % and +/-.
+Now we'll evaluate the button for each of the values, and set the display appropriately.  We'll use a `switch` statement to do this.  In brief, switch statements take the value in the `()` and looks through the `case X:` statements for a match, running the matching code.
+* I've updated the comments for what each `case` should do, you can fill it out and then compare it to the actual below.
 
 ```js
-    //if the button is one of the listed 'special operators' we'll just end our function now.
-    if (button === '=' || button === '%' || button === '+/-')
-        return
+    //set the expected display per the requirements, and check it
+    switch (button) {
+        case 'AC': //clear the display (set to 0)
+
+            break
+        case '=': //end the function if '='
+
+            break
+        case '%': //if the display is not 0, divide it by 100
+
+            break
+        case '+/-': //flip the positive/negative status of the number
+
+            break
+        case '*': //if the button is any of these 4, default the screen back to 0
+        case '/':
+        case '+':
+        case '-':
+
+            break
+        case '.': //if it's a decimal, check that the number doesn't already contain a . - if it does, leave currentDisplay alone,
+
+            break
+        default: //for any regular number, update the display appropriately
+
+            break
+    }
+
 ```
 
-Now we can start getting into the thick of it.  First, I want to define a couple of functions.
+<details>
 
-*isNaN()*
-> Takes an input.  If it is a number, returns false.  If it is 'not a number' returns true.
-
-*parseInt()*
-> Takes an input.  If it is a number (even in a string) returns that number.  Otherwise, returns 'NaN' (not a number)
-
-We know based on how the calculator works, if anything else that is not a number (besides '.') is clicked, the display is reset to '0'.  We can check for that in our function, so that we expect the right result.
+<summary> <code> cases in detail </code> </summary>
 
 ```js
-//if the button clicked is not a number or decimal, we handle it a little differently.
-    if (isNaN(parseInt(button)) && button !== '.') {
-        //current display is returned to 0
-        currentDisplay = '0'
-        browser.expect.element(selectors['result']).text.to.equal('0')
+    //set the expected display per the requirements, and check it
+    switch (button) {
+        case 'AC': //clear the display (set to 0)
+            currentDisplay = '0'
+            break
+        case '=': //end the function if '='
+            return
+            break
+        case '%': //if the display is not 0, divide it by 100
+            if (currentDisplay !== '0')
+                currentDisplay = (parseFloat(currentDisplay) / 100).toString()
+            break
+        case '+/-': //flip the positive/negative status of the number
+            if (currentDisplay[0] === '-')
+                currentDisplay = currentDisplay.substr(1)
+            else
+                currentDisplay = '-' + currentDisplay
+            break
+        case '*': //if the button is any of these 4, default the screen back to 0
+        case '/':
+        case '+':
+        case '-':
+            currentDisplay = '0'
+            break
+        case '.': //if it's a decimal, check that the number doesn't already contain a . - if it does, leave currentDisplay alone,
+            if (currentDisplay.indexOf('.') === -1) //if there is no decimal, indexOf returns -1
+                currentDisplay += '.'
+            break
+        default: //for any regular number, update the display appropriately
+            if (currentDisplay === '0')
+                currentDisplay = button
+            else
+                currentDisplay += button
+            break
     }
 ```
 
-To handle number clicks (or decimal clicks) we have things a little easier.  We may need to replace a zero on the screen (if the display is '0' and we didn't press the decimal), otherwise we just add the new number to the existing number on the screen, and expect the new result.
+</details>
+
+All that's left now is to compare our expected `currentDisplay` to what's actually in the display
 
 ```js
-    else {
-        //if the current display is 0, the button clicked will replace it, unless the button is a period.
-        if (currentDisplay === '0' && button !== '.')
-            currentDisplay = button
-        //otherwise, the button clicked is appended to the current display
-        else
-            currentDisplay += button
-        //either way, now we can check the updated display
-        browser.expect.element(selectors['result']).text.to.equal(currentDisplay)
-    }
+    //now that currentDisplay has been updated appropraitely (matching the requirements) we can 'expect' the result
+    browser.expect.element(selectors['result']).text.to.equal(currentDisplay)
 ```
 
 The resulting function is a little complicated, but it will certainly work.  Finally, we can add the `buttonClicker` function to our exported object.
@@ -701,11 +758,17 @@ This test gave our function a bit of a workout, but it works!  Run the tests aga
 
 You should get something similar to this!  If not, look back over your functions and test, you can also compare the files to the code solution below.
 
-Good work easing into the world of functions - we'll look at one in our next step that will make life even easier for future testing efforts!
+You can also rework your existing test(s) now with the `buttonClicker` function!
+
+</details>
+
+Good work easing into the world of functions - or diving in if you tackled the `buttonClicker`.  In our next step, we'll start incorporating a data file!
 
 </details>
 
 ### Code Solution
+
+*Note:* The solutions incorporate the `buttonClicker` stretch goal.
 
 <details>
 
@@ -770,8 +833,8 @@ var currentDisplay = '0'
 
 /**
  * Clicks a button and checks that the resulting display is correct.
- * If the button clicked is a special operator (=, %, +/-), we won't
- * check the result in this function.
+ * If the button clicked '=', we won't check the result in this function.
+ * As the function won't reset with the test, we should click the clear button before each test
  * 
  * @param {object} browser     an object provided by NightwatchJS which hooks into the test browser
  * @param {string} button      the key of the button to click (corresponds to the keys in selectors.js)
@@ -779,33 +842,48 @@ var currentDisplay = '0'
 const buttonClicker = (browser, button) => {
     //click the button
     browser.click(selectors[button])
-    //verify the display if NOT a special operator
-    //if the button is one of the listed 'special operators' we'll just end our function now.
-    if (button === '=' || button === '%' || button === '+/-')
-        return
-    //if the button clicked is not a number or decimal, we handle it a little differently.
-    if (isNaN(parseInt(button)) && button !== '.') {
-        //current display is returned to 0
-        currentDisplay = '0'
-        browser.expect.element(selectors['result']).text.to.equal('0')
+    //set the expected display per the requirements, and check it
+    switch (button) {
+        case 'AC': //clear the display (set to 0)
+            currentDisplay = '0'
+            break
+        case '=': //end the function if '='
+            return
+            break
+        case '%': //if the display is not 0, divide it by 100
+            if (currentDisplay !== '0')
+                currentDisplay = (parseFloat(currentDisplay) / 100).toString()
+            break
+        case '+/-': //flip the positive/negative status of the number
+            if (currentDisplay[0] === '-')
+                currentDisplay = currentDisplay.substr(1)
+            else
+                currentDisplay = '-' + currentDisplay
+            break
+        case '*': //if the button is any of these 4, default the screen back to 0
+        case '/':
+        case '+':
+        case '-':
+            currentDisplay = '0'
+            break
+        case '.': //if it's a decimal, check that the number doesn't already contain a . - if it does, leave currentDisplay alone,
+            if (currentDisplay.indexOf('.') === -1) //if there is no decimal, indexOf returns -1
+                currentDisplay += '.'
+            break
+        default: //for any regular number, update the display appropriately
+            if (currentDisplay === '0')
+                currentDisplay = button
+            else
+                currentDisplay += button
     }
-    else {
-        //if the current display is 0, the button clicked will replace it, unless the button is a period.
-        if (currentDisplay === '0' && button !== '.')
-            currentDisplay = button
-        //otherwise, the button clicked is appended to the current display
-        else
-            currentDisplay += button
-        //either way, now we can check the updated display
-        browser.expect.element(selectors['result']).text.to.equal(currentDisplay)
-    }
+    //now that currentDisplay has been updated appropraitely (matching the requirements) we can 'expect' the result
+    browser.expect.element(selectors['result']).text.to.equal(currentDisplay)
 }
 
 module.exports = {
     uiChecker: uiChecker,
     buttonClicker: buttonClicker
 }
-```
 
 </details>
 
