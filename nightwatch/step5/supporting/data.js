@@ -1,14 +1,18 @@
 module.exports = {
-    simpleAddition : {
+    simpleAddition: {
         buttons: ['2', '+', '2', '='],
         solution: '4'
     },
-    decimalMultiplication : {
+    decimalMultiplication: {
         buttons: ['3', '2', '.', '1', '*', '2', '='],
         solution: '64.2'
     },
-    otherButtons : {
+    otherButtons: {
         buttons: ['5', '4', '2', '1', '%', '+/-', '+', '2', '='],
         solution: '-52.21'
+    },
+    simpleDivision: {
+        buttons: ['3', '5', '/', '7', '='],
+        solution: '5'
     }
 }

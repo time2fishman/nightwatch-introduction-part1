@@ -27,7 +27,7 @@ const uiChecker = browser => {
     browser.expect.element(selectors['AC']).to.be.visible
     browser.expect.element(selectors['.']).to.be.visible
     browser.expect.element(selectors['result']).to.be.visible
-    //check elements for displayed text
+        //check elements for displayed text
     browser.expect.element(selectors['0']).text.to.equal('0')
     browser.expect.element(selectors['1']).text.to.equal('1')
     browser.expect.element(selectors['2']).text.to.equal('2')
@@ -65,7 +65,7 @@ var currentDisplay = '0'
 const buttonClicker = (browser, button) => {
     //click the button
     browser.click(selectors[button])
-    //set the expected display per the requirements, and check it
+        //set the expected display per the requirements, and check it
     switch (button) {
         case 'AC': //clear the display (set to 0)
             currentDisplay = '0'
@@ -103,7 +103,25 @@ const buttonClicker = (browser, button) => {
     browser.expect.element(selectors['result']).text.to.equal(currentDisplay)
 }
 
+
+/**
+ * runs a full test based on the test data object passed in
+ * 
+ * @param {object} browser     an object provided by NightwatchJS which hooks into the test browser
+ * @param {object} data        an object passed in containing test data in the expected format
+ * { buttons: [], solution: ''}
+ */
+const testRunner = (browser, data) => {
+    //click all the buttons
+    data.buttons.forEach(button => {
+            buttonClicker(browser, button)
+        })
+        //check the solution
+    browser.expect.element(selectors['result']).text.to.equal(data.solution)
+}
+
 module.exports = {
     uiChecker: uiChecker,
-    buttonClicker: buttonClicker
+    buttonClicker: buttonClicker,
+    testRunner: testRunner
 }
