@@ -21,6 +21,7 @@
     "step2": "nightwatch nightwatch/step2/tests/",
     "step3": "nightwatch nightwatch/step3/tests/",
     "step4": "nightwatch nightwatch/step4/tests/",
+    "step5": "nightwatch nightwatch/step5/tests/",
     "eject": "react-scripts eject"
   }
 }

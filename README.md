@@ -66,7 +66,7 @@ Note2: Also for Windows, your `chromedriver` listing needs to be `chromedriver.e
 
 ### The Format
 
-Every step is in a separate folder.  Look in the file explorer of the project, and compare it to the file tree below.  (Some of this is under construction, but this is what your starting file structure in the nightwatch folder will look like)
+Every step is in a separate folder.  Look in the file explorer of the project, and compare it to the file tree below.  (Some of this is under construction, but this is what your starting file structure in the nightwatch folder will look like, before you've done ANY work)
 
 <details>
 
@@ -754,7 +754,7 @@ In our `tests.js` file, let's create a new test, 32.1*2=64.2.  This will check d
 
 This test gave our function a bit of a workout, but it works!  Run the tests again (`npm run step3`)
 
-<img src="https://raw.githubusercontent.com/devmtn-aj/nightwatch-introduction/solution/readme-assets/step1Results.png"/>
+<img src="https://raw.githubusercontent.com/devmtn-aj/nightwatch-introduction/solution/readme-assets/step3Results.png"/>
 
 You should get something similar to this!  If not, look back over your functions and test, you can also compare the files to the code solution below.
 
@@ -898,6 +898,7 @@ const functions = require('../supporting/functions')
 module.exports = {
     beforeEach : browser => {
         browser.url('http://localhost:3000')
+        functions.buttonClicker(browser, 'AC')
     },
     after : browser => {
         browser.end()
@@ -905,18 +906,11 @@ module.exports = {
     'UI Check' : browser => functions.uiChecker(browser),
     '2+2=4' : browser => {
         //I click all the appropriate buttons and check the display for the appropriate results, per the steps of my test case
-        browser
-            .click(selectors['2'])
-            .expect.element(selectors['result']).text.to.equal('2')
-        browser
-            .click(selectors['+'])
-            .expect.element(selectors['result']).text.to.equal('0')
-        browser
-            .click(selectors['2'])
-            .expect.element(selectors['result']).text.to.equal('2')
-        browser
-            .click(selectors['='])
-            .expect.element(selectors['result']).text.to.equal('4')
+        functions.buttonClicker(browser, '2')
+        functions.buttonClicker(browser, '+')
+        functions.buttonClicker(browser, '2')
+        functions.buttonClicker(browser, '=')
+        browser.expect.element(selectors['result']).text.to.equal('4')
     },
     '32.1*2=64.2' : browser => {
         functions.buttonClicker(browser, '3')
@@ -950,11 +944,187 @@ This may well be the simplest step of the 5...  We're going to refactor our exis
 
 <summary> Detailed Instructions </summary>
 
-Ask AJ for help.
+In practice, you'll set up and call your `data.js` file the same way you set up and called `selectors.js`...
+
+```js
+module.exports = {
+    //setting it up in data.js
+}
+```
+
+```js
+//adding it to the filed required in tests.js
+const selectors = require('../supporting/selectors')
+const functions = require('../supporting/functions')
+const data = require('../supporting/data')
+```
+
+With this framework, we want to create objects in our `data.js` export that contain all the data for one test.  So, in the files prepped already for Step 4, we have two tests, so we'll need two corresponding objects in the `data.js` exported object.  And while our test names before were easily understood, `'32.1*2=64.2'` is a pain to write over and over again.  We'll name the object for our `2+2=4` function `simpleAddition`, and the other `decimalMultiplication`.
+
+```js
+module.exports = {
+    simpleAddition : {
+
+    },
+    decimalMultiplication : {
+
+    }
+}
+```
+
+Now, each test data object should track all the inputs and the outputs.  For another app this may be more complicated, but for our simple calculator, we have buttons pressed, and expected results.  We don't need to worry about what the display should look like after each button, because our `buttonClicker` function checks those automatically.  We only need to worry about our final solution.  We can add a `buttons` property whose value will be an array of all the buttons to be clicked, and another `solution` property with the expected solution to the calculation.
+
+```js
+module.exports = {
+    simpleAddition : {
+        buttons: [],
+        solution: ''
+    },
+    decimalMultiplication : {
+        buttons: [],
+        solution: ''
+    }
+}
+```
+
+With the framework in place, we can popluate the buttons and solution accordingly.
+
+```js
+module.exports = {
+    simpleAddition : {
+        buttons: ['2', '+', '2', '='],
+        solution: '4'
+    },
+    decimalMultiplication : {
+        buttons: ['3', '2', '.', '1', '*', '2', '='],
+        solution: '64.2'
+    }
+}
+```
+
+Now that we have our data file ready to go for our existing tests, we'll refactor them, so that any time they declared an input or expected result, we'll get it from our data file.
+
+For example, the first line of our first test in `tests.js` is:
+
+```js
+        functions.buttonClicker(browser, '2')
+```
+
+In this example, `'2'` is the declared input, the button to be clicked.  As it's the first button to be clicked in our first test data object in `data.js`, `simpleAddition`, and we've already required the `data.js` export in our `test.js` file, we can replace the `'2'` in this line like so:
+
+```js
+        functions.buttonClicker(browser, data.simpleAddition.buttons[0])
+```
+
+`data.simpleAddition.buttons[0]` grabs the `data` constant, which is our `data.js` export, then the `simpleAddition` property, which is our test data object, then the `buttons` property, which is the array of our buttons to click, and then `[0]`, the button click that's first in the list.
+
+For the next line, we'll do the same thing, only calling `.buttons[1]` at the end, then so on until we've clicked all the buttons and we check the result.  The final product for our first test will be this:
+
+```js
+    '2+2=4' : browser => {
+        //I click all the appropriate buttons and check the display for the appropriate results, per the steps of my test case
+        functions.buttonClicker(browser, data.simpleAddition.buttons[0])
+        functions.buttonClicker(browser, data.simpleAddition.buttons[1])
+        functions.buttonClicker(browser, data.simpleAddition.buttons[2])
+        functions.buttonClicker(browser, data.simpleAddition.buttons[3])
+        browser.expect.element(selectors['result']).text.to.equal(data.simpleAddition.solution)
+    },
+```
+
+Now you should be able to refactor the second test.
+
+The next part of this step is to add a new test that will look at the % and +/- keys.  We'll create a test that will just enter a series of numbers, and then click both keys in sequence, to get '-52.21'.  In sequence that means we can click '5', '4', '2', '1', '%', '+/-', '+', '2', '='.  So, let's set up the test data object in `data.js` for that!  I'll name the property `otherButtons` since we're using it to test unchecked buttons.
+
+```js
+    otherButtons : {
+        buttons: ['5', '4', '2', '1', '%', '+/-', '+', '2', '='],
+        solution: '-52.21'
+    }
+```
+
+We'll add another test to our `tests.js` file, an we'll just name it `'otherButtons'` as well for simplicity's sake.  Use the same format to declare the test that you did for `'2+2=4'`, using `buttonClicker` and `data`.  What the code ought to look like will be included in the code solution, but when all is said and done, and you run your tests (`npm run step4`), your results should look something like this:
+
+<img src="https://raw.githubusercontent.com/devmtn-aj/nightwatch-introduction/solution/readme-assets/step4Results.png"/>
 
 </details>
 
 ### Code Solution
+
+<details>
+
+<summary> <code> data.js </code> </summary>
+
+```js
+module.exports = {
+    simpleAddition : {
+        buttons: ['2', '+', '2', '='],
+        solution: '4'
+    },
+    decimalMultiplication : {
+        buttons: ['3', '2', '.', '1', '*', '2', '='],
+        solution: '64.2'
+    },
+    otherButtons : {
+        buttons: ['5', '4', '2', '1', '%', '+/-', '+', '2', '='],
+        solution: '-52.21'
+    }
+}
+```
+
+</details>
+
+<details>
+
+<summary> <code> tests.js </code> </summary>
+
+```js
+const selectors = require('../supporting/selectors')
+const functions = require('../supporting/functions')
+const data = require('../supporting/data')
+
+module.exports = {
+    beforeEach : browser => {
+        browser.url('http://localhost:3000')
+        functions.buttonClicker(browser, 'AC')
+    },
+    after : browser => {
+        browser.end()
+    },
+    'UI Check' : browser => functions.uiChecker(browser),
+    '2+2=4' : browser => {
+        //I click all the appropriate buttons and check the display for the appropriate results, per the steps of my test case
+        functions.buttonClicker(browser, data.simpleAddition.buttons[0])
+        functions.buttonClicker(browser, data.simpleAddition.buttons[1])
+        functions.buttonClicker(browser, data.simpleAddition.buttons[2])
+        functions.buttonClicker(browser, data.simpleAddition.buttons[3])
+        browser.expect.element(selectors['result']).text.to.equal(data.simpleAddition.solution)
+    },
+    '32.1*2=64.2' : browser => {
+        functions.buttonClicker(browser, data.decimalMultiplication.buttons[0])
+        functions.buttonClicker(browser, data.decimalMultiplication.buttons[1])
+        functions.buttonClicker(browser, data.decimalMultiplication.buttons[2])
+        functions.buttonClicker(browser, data.decimalMultiplication.buttons[3])
+        functions.buttonClicker(browser, data.decimalMultiplication.buttons[4])
+        functions.buttonClicker(browser, data.decimalMultiplication.buttons[5])
+        functions.buttonClicker(browser, data.decimalMultiplication.buttons[6])
+        browser.expect.element(selectors['result']).text.to.equal(data.decimalMultiplication.solution)
+    },
+    'otherButtons' : browser => {
+        functions.buttonClicker(browser, data.otherButtons.buttons[0])
+        functions.buttonClicker(browser, data.otherButtons.buttons[1])
+        functions.buttonClicker(browser, data.otherButtons.buttons[2])
+        functions.buttonClicker(browser, data.otherButtons.buttons[3])
+        functions.buttonClicker(browser, data.otherButtons.buttons[4])
+        functions.buttonClicker(browser, data.otherButtons.buttons[5])
+        functions.buttonClicker(browser, data.otherButtons.buttons[6])
+        functions.buttonClicker(browser, data.otherButtons.buttons[7])
+        functions.buttonClicker(browser, data.otherButtons.buttons[8])
+        browser.expect.element(selectors['result']).text.to.equal(data.otherButtons.solution)
+    }
+}
+```
+
+</details>
 
 ## Contributions
 
